@@ -1,52 +1,44 @@
 #heading{
-    padding:25px 10px;
+    padding:18px 35px;
     border:3px solid #45477b;
-    border-radius:20px;
-    width:300px;
-    margin:50px auto 20px;
-    text-align:center;
-    box-shadow:0 0 0 6px #93c5fd;
+    border-radius:18px;
+    margin-top:50px;
+    margin-bottom:20px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
     background:white;
     color:#2f3a6b;
+    font-size:42px;
 }
-
 body{
-      background: linear-gradient(
-        to right,
-        #667eea,
-        #764ba2
-    );
-    font-family:Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right,#667eea,#764ba2);
+    font-family: Arial, Helvetica, sans-serif;
     margin:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
 }
 
 #tt{
-    width:70%;
-    max-width:900px;
-    margin:20px auto;
-    padding:15px;
-    font-size:18px;
+    width:80%;
+    max-width:650px;
     text-align:center;
-    border:3px solid #45477b;
-    border-radius:15px;
-    background:white;
-    color:#444;
+    color:white;
+    background:none;
+    border:none;
+    margin-bottom:35px;
+    font-weight:normal;
 }
 
 .url-enter{
     display:flex;
     flex-direction:column;
     gap:20px;
-
     width:450px;
     margin:40px auto;
-
     padding:30px;
-
     border-radius:20px;
-
-    background:#93c5fd;
-
+    background:#e4e7e9;
     box-shadow:0 10px 20px rgba(0,0,0,0.15);
 }
 
