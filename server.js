@@ -1,4 +1,5 @@
 const express = require("express");
+const QRCode = require("qrcode");
 const app = express();
 const port = 5000;
 const urls = {};
@@ -14,6 +15,22 @@ app.post("/shorten", (req, res) => {
 
     res.json({
         shortUrl: `http://localhost:${port}/${shortCode}`
+    });
+});
+
+app.post("/qr", async (req, res) => {
+    const shortUrl = req.body.shortUrl;
+
+    if (!shortUrl) {
+        return res.status(400).json({
+            message: "Short URL is required"
+        });
+    }
+
+    const qrImage = await QRCode.toDataURL(shortUrl);
+
+    res.json({
+        qrImage
     });
 });
 
