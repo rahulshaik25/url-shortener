@@ -32,6 +32,7 @@ const shortenButton = document.getElementById("short");
 shortenButton.addEventListener("click", () => {
     if (url.value.trim() === "") {
         alert("URL cannot be empty");
+        return;
     } else {
         fetch("/shorten", {
             method: "POST",
