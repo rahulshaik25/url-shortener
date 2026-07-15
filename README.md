@@ -43,8 +43,8 @@ A simple full-stack URL shortener with QR code generation, built with Express an
 
 1. Clone the repo and install dependencies:
    ```bash
-   git clone https://github.com/rahulshaik25/<repo-name>.git
-   cd <repo-name>
+   git clone https://github.com/rahulshaik25/url-shortener.git
+   cd url-shortener
    npm install
    ```
 
