@@ -85,4 +85,4 @@ A simple full-stack URL shortener with QR code generation, built with Express an
 
 ## License
 
-Rahul Shaik
+© 2026 Rahul Shaik. All rights reserved.
