@@ -1,5 +1,7 @@
 const QRCode = require("qrcode");
 const pool = require("../config/db");
+const { normalizeUrl, getBaseUrl } = require("../utils/urlUtils");
+const { createUniqueShortCode } = require("../utils/shortCode");
 
 async function shortenUrl(req, res) {
     let conn;
@@ -13,23 +15,34 @@ async function shortenUrl(req, res) {
             });
         }
 
-        url = url.trim();
-
-        if (!/^https?:\/\//i.test(url)) {
-            url = "https://" + url;
-        }
-
         try {
-            new URL(url);
+            url = normalizeUrl(url);
         } catch {
             return res.status(400).json({
                 error: "Invalid URL"
             });
         }
 
-        const shortCode = Math.random().toString(36).substring(2, 8);
-
         conn = await pool.getConnection();
+
+        // Flow: check database first, reuse existing short code if this URL was already shortened.
+        const existingRows = await conn.query(
+            `
+            SELECT short_code
+            FROM urls
+            WHERE original_url = ?
+            LIMIT 1
+            `,
+            [url]
+        );
+
+        if (existingRows.length > 0) {
+            return res.json({
+                shortUrl: `${getBaseUrl(req)}/${existingRows[0].short_code}`
+            });
+        }
+
+        const shortCode = await createUniqueShortCode(conn);
 
         await conn.query(
             `
@@ -40,7 +53,7 @@ async function shortenUrl(req, res) {
         );
 
         res.json({
-            shortUrl: `${req.protocol}://${req.get("host")}/${shortCode}`
+            shortUrl: `${getBaseUrl(req)}/${shortCode}`
         });
 
     } catch (err) {
@@ -100,6 +113,15 @@ async function redirectToOriginalUrl(req, res) {
         if (rows.length === 0) {
             return res.status(404).send("Short URL not found");
         }
+
+        await conn.query(
+            `
+            UPDATE urls
+            SET click_count = COALESCE(click_count, 0) + 1
+            WHERE short_code = ?
+            `,
+            [shortCode]
+        );
 
         res.redirect(rows[0].original_url);
     } catch (err) {
