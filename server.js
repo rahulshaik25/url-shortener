@@ -1,101 +1,35 @@
-const mysql = require("mysql2");
+require("dotenv").config();
+const pool = require("./config/db");
 const express = require("express");
-const QRCode = require("qrcode");
+const urlRoutes = require("./routes/urlRoutes");
 const app = express();
-const port = 5000;
-const urls = {};
+const port = process.env.PORT || 5000;
 
 
 app.use(express.json());
 app.use(express.static("public"));
-// const myconnection = mysql.createConnection({
-//     host: "localhost",
-//     user : "root",
-//     password : "2004-Rahul",
-//     database: "url_shortener"
-// });
-
-// myconnection.connect((err)=>{
-//     if(err)
-//     {
-//         console.error("database connection failed",err);
-//     }
-//     console.log(" Connected to MariaDB!");
-// })
+app.use("/", urlRoutes);
 
 
-app.post("/shorten", async (req, res) => {
+async function testConnection() {
+    let conn;
+
     try {
-        // Read and clean the URL sent by the frontend.
-        let longUrl = req.body.url.trim();
-
-        if (longUrl === "") {
-            return res.status(400).json({
-                message: "URL cannot be empty"
-            });
-        }
-
-        // Add https:// when the user enters only a domain like amazon.in.
-        if (!longUrl.startsWith("https://") && !longUrl.startsWith("http://")) {
-            longUrl = `https://${longUrl}`;
-        }
-
-        // Validate URL syntax using JavaScript's built-in URL class.
-        new URL(longUrl);
-
-        // Check whether the destination website is reachable before shortening it.
-        const response = await fetch(longUrl, {
-            method: "HEAD"
-        });
-
-        if (!response.ok) {
-            return res.status(400).json({
-                message: "Website is unreachable"
-            });
-        }
-
-        const shortCode = Math.random().toString(36).substring(2, 8);
-
-        urls[shortCode] = longUrl;
-
-        res.json({
-            shortUrl: `http://localhost:${port}/${shortCode}`
-        });
+        conn = await pool.getConnection();
+        console.log(" Connected to MariaDB");
+        const rows = await conn.query("SHOW TABLES");
+        console.log(rows);
+        
     } catch (err) {
-        return res.status(400).json({
-            message: "Invalid or unreachable URL"
-        });
+        console.error(" Database connection failed");
+        console.error(err);
+    } finally {
+        if (conn) conn.release();
     }
-});
+}
 
-app.post("/qr", async (req, res) => {
-    const shortUrl = req.body.shortUrl;
-
-    if (!shortUrl) {
-        return res.status(400).json({
-            message: "Short URL is required"
-        });
-    }
-
-    const qrImage = await QRCode.toDataURL(shortUrl);
-
-    res.json({
-        qrImage
-    });
-});
-
-app.get("/:shortCode", (req, res) => {
-    const shortCode = req.params.shortCode;
-    const longUrl = urls[shortCode];
-
-    if (longUrl) {
-        res.redirect(longUrl);
-    } else {
-        res.status(404).send("Short URL not found");
-    }
-});
+testConnection();
 
 app.listen(port, ()=>{
     console.log(`Server is running on http://localhost:${port}`)
 })
-
