@@ -19,7 +19,13 @@
          <div class="actions">
             <button id="copy">Copy</button>
             <button id="qr">QR Code</button>
-            <button id="share">Share</button>
+            <button id="share" aria-expanded="false" aria-controls="shareMenu">Share</button>
+        </div>
+        <div id="shareMenu" class="share-menu" hidden>
+            <button type="button" id="nativeShare">Share Sheet</button>
+            <a id="shareWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+            <a id="shareX" href="#" target="_blank" rel="noopener">X</a>
+            <button type="button" id="shareInstagram">Instagram</button>
         </div>
     </div>
     <div id="qrCode"></div>

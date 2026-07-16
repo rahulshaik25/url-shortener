@@ -69,9 +69,44 @@ button{
     display:flex;
     justify-content:center;
     gap:15px;
+    flex-wrap:wrap;
 }
 button:hover{
     background:#353760;
+}
+
+.share-menu{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.share-menu[hidden]{
+    display:none;
+}
+
+.share-menu a,
+.share-menu button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:130px;
+    min-height:40px;
+    padding:10px 12px;
+    border:none;
+    border-radius:10px;
+    background:#ffffff;
+    color:#45477b;
+    font-size:14px;
+    text-decoration:none;
+    cursor:pointer;
+    box-sizing:border-box;
+}
+
+.share-menu a:hover,
+.share-menu button:hover{
+    background:#d7d9e8;
 }
 
 #sht{
@@ -93,4 +128,27 @@ button:hover{
     padding:12px;
     background:white;
     border-radius:10px;
+}
+
+@media (max-width:540px){
+    .url-enter{
+        width:calc(100% - 40px);
+        padding:24px;
+        box-sizing:border-box;
+    }
+
+    button{
+        width:100%;
+    }
+
+    .actions,
+    .share-menu{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .share-menu a,
+    .share-menu button{
+        width:100%;
+    }
 }
