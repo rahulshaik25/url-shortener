@@ -117,6 +117,24 @@ urlRoutes.js  ──▶  urlController.js  ──▶  urlUtils.js / shortCode.js
 | POST   | `/qr`          | `{ "shortUrl": "..." }`       | Returns `{ qrImage }` (base64 PNG)    |
 | GET    | `/:shortCode`  | —                              | Redirects to the original URL         |
 
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=YOUR_LOCAL_PASSWORD
+DB_NAME=url_shortener
+```
+
+### Aiven Deployment
+
+```env
+DB_HOST=YOUR_AIVEN_HOST
+DB_PORT=YOUR_AIVEN_PORT
+DB_USER=avnadmin
+DB_PASSWORD=YOUR_AIVEN_PASSWORD
+DB_NAME=defaultdb
+```
+
 ## License
 
 © 2026 Rahul Shaik. All rights reserved.
