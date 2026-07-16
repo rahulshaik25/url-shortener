@@ -117,6 +117,7 @@ urlRoutes.js  ──▶  urlController.js  ──▶  urlUtils.js / shortCode.js
 | POST   | `/qr`          | `{ "shortUrl": "..." }`       | Returns `{ qrImage }` (base64 PNG)    |
 | GET    | `/:shortCode`  | —                              | Redirects to the original URL         |
 
+## env file changes in Local Deployment
 ```env
 DB_HOST=localhost
 DB_PORT=3306
@@ -125,7 +126,7 @@ DB_PASSWORD=YOUR_LOCAL_PASSWORD
 DB_NAME=url_shortener
 ```
 
-### Aiven Deployment
+###  env changes in Aiven Deployment
 
 ```env
 DB_HOST=YOUR_AIVEN_HOST
