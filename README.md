@@ -135,6 +135,11 @@ DB_USER=avnadmin
 DB_PASSWORD=YOUR_AIVEN_PASSWORD
 DB_NAME=defaultdb
 ```
+## Notes
+
+- Never commit your `.env` file.
+- The `ca.pem` certificate is only required when using Aiven.
+- Render Environment Variables should contain the same values as your Aiven `.env`.
 
 ## License
 
