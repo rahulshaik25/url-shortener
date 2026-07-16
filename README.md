@@ -119,4 +119,4 @@ urlRoutes.js  ──▶  urlController.js  ──▶  urlUtils.js / shortCode.js
 
 ## License
 
-Shaikrahul
+© 2026 Rahul Shaik. All rights reserved.
